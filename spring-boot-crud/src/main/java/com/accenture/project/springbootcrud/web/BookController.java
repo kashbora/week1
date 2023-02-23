@@ -3,6 +3,8 @@ package com.accenture.project.springbootcrud.web;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ public class BookController {
 	@Autowired
 	BookRepository bookRepository;
 	
+	private final Logger logger = LoggerFactory.getLogger(BookController.class);
+	
 	@GetMapping("/books")
 	public ResponseEntity<List<BookEntity>> getAllBookDetails(){
 		List<BookEntity> bookEntities = bookRepository.findAll();
@@ -35,6 +39,7 @@ public class BookController {
 	@PostMapping("/books")
 	public ResponseEntity<BookEntity> createBook(@RequestBody BookEntity newBookEntity){
 		BookEntity bookEntity = bookRepository.save(newBookEntity);
+		logger.info("SAVE EXECUTION SUCCESSFUL");
 		return new ResponseEntity<>(bookEntity, HttpStatus.CREATED);
 	}
 	
